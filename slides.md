@@ -4,47 +4,15 @@ theme: apple-basic
 # random image from a curated Unsplash collection by Anthony
 # like them? see https://unsplash.com/collections/94734566/slidev
 # some information about your slides (markdown enabled)
-title: Welcome to Slidev
-info: |
-  ## Slidev Starter Template
-  Presentation slides for developers.
-
-  Learn more at [Sli.dev](https://sli.dev)
-# apply unocss classes to the current slide
-class: text-center
+title: Brand your types!
 # https://sli.dev/features/drawing
 drawings:
   persist: false
 # slide transition: https://sli.dev/guide/animations.html#slide-transitions
-transition: slide-left
 # enable MDC Syntax: https://sli.dev/features/mdc
 mdc: true
 favicon: 'images/favicon-32x32.png'
----
-
-# Welcome to Slidev
-
-Presentation slides for developers
-
-<div @click="$slidev.nav.next" class="mt-12 py-1" hover:bg="white op-10">
-  Press Space for next page <carbon:arrow-right />
-</div>
-
-<div class="abs-br m-6 text-xl">
-  <button @click="$slidev.nav.openInEditor()" title="Open in Editor" class="slidev-icon-btn">
-    <carbon:edit />
-  </button>
-  <a href="https://github.com/slidevjs/slidev" target="_blank" class="slidev-icon-btn">
-    <carbon:logo-github />
-  </a>
-</div>
-
-<!--
-The last comment block of each slide will be treated as slide notes. It will be visible and editable in Presenter Mode along with the slide. [Read more in the docs](https://sli.dev/guide/syntax.html#notes)
--->
-
----
-transition: fade-out
+transition: slide-left
 layout: intro-image
 image: 'images/front.png'
 ---
@@ -55,6 +23,8 @@ image: 'images/front.png'
 🦋 [@theodorc.no](https://bsky.app/profile/theodorc.no) 
 
 </div>
+
+<img src="/images/dr.png" alt="DR" class="w-1/7 absolute top-10 right-10" />
 
 <div class="absolute top-10 left-10">
   <span class="font-700">
@@ -68,29 +38,42 @@ backdrop-blur-sm text-white p-4 rounded-lg">
   <p> Theodor René Carlsen, DR</p>
 </div>
 
+---
+layout: intro-image-right
+image: 'images/right.png'
+---
+
+# Programming languages
+
+<ul class="marker:text-slate-400 space-y-6">
+  <li> human(programmer)-computer interaction </li>
+  <li> By humans, for humans</li>
+  <li> Semantics! </li>
+  <li> Strings </li>
+</ul>
+
 
 ---
-transition: fade-out
-layout: image-right
-image: 'images/right.png'
+layout: image-left
+image: 'images/abstract.png'
 ---
 
 # Strings!
 
-- Easy!
-- Readable!
-- Printable!
-- Can be anything!
-- Can be used for anything!
-
+<ul class="marker:text-slate-400 space-y-6">
+  <li> Easy! </li>
+    <li> Readable! </li>
+    <li> Printable! </li>
+    <li> Can be used for anything! </li>
+    <li> Can be anything! </li>
+</ul>
 
 ---
-transition: fade-out
-layout: bullets
-class: text-white
+layout: intro-image-right
+image: 'images/a_bit_messy.png'
 ---
 
-# Anything!
+# Anything?
 
 <v-clicks>
 
@@ -104,145 +87,306 @@ class: text-white
 
 </v-clicks>
 
+---
+layout: intro-image
+image: 'images/tight.png'
+class: flex items-center justify-center flex-col
+---
+
+<div v-click class="border-2 border-white/20 bg-white/10
+backdrop-blur-sm text-white p-4 rounded-lg">
+
+
+# Total functions
+
+- Handle any possible input (within the type)
+</div>
+
+
+
 
 ---
-transition: fade-out
 layout: image-right
-image: https://cover.sli.dev
+image: 'images/right2.png'
 ---
 
 # This is where branded types comes in!
 
 * Add a compile time "tag" or "brand" to our string
-* Works with any type, but lets focus on strings for now
+* Works with any type, but great for strings and numbers
 
 ```ts
 declare const brand: unique symbol
-declare type BrandedString<T> = string & { [brand]: T }
+type Brand<T, B> = T & { [brand]: B }
+type UUID = Brand<string, "UUID">
+const id = "1234" as UUID
 ```
 
 
 ---
-transition: fade-out
-layout: center
+class: w-full
 ---
 
-# Simple examples
+# Example
 
-````md magic-move
-```ts
+<div style="--slidev-code-font-size: 18px; --slidev-code-line-height: 24px;">
+
+````md magic-move {lines:true}
+```ts {1-5|1-10|1-14}
 // utils.ts
-function validateUsernameAndPassword(
+function login(
   username: string,
   password: string
 ): boolean {
-    // your validation logic
-    assertValid(username);
-    assertValid(password);
-    return myBackendValidation(username, password);
+    doSomeLogic(username);
+    const hash = calculateHash(password);
+    return myBackendValidation(username, hash);
 }
 
 const username = "theo"
 const password = "hunter2"
-validateUsernameAndPassword(password, username);
+login(password, username); 
+// No error(!) ^^
 ```
-```ts
+```ts {*|1-5|1-10|1-14}
 // utils.ts
-function validateUsernameAndPassword(
+function login(
   username: Username,
   password: Password
 ): boolean {
-    // your validation logic
-    assertValid(username);
-    assertValid(password);
-    return myBackendValidation(username, password);
+    doSomeLogic(username);
+    const hash = calculateHash(password);
+    return myBackendValidation(username, hash);
 }
 
 const username = "theo" as Username
 const password = "hunter2" as Password
-validateUsernameAndPassword(password, username);
+login(password, username);
 // Compile error^^
 ```
 ````
+</div>
 
 
 
 ---
-transition: slide-up
 level: 2
 ---
 
-````md magic-move
+<div style="--slidev-code-font-size: 16px; --slidev-code-line-height: 20px;">
+
+````md magic-move {lines:true}
 ```ts
 // brands.ts
 declare const brand: unique symbol
-declare type BrandedString<T> = string & { [brand]: T }
+declare type Brand<T, B> = T & { [brand]: B }
 
-export type Username = BrandedString<"Username">
-export type Password = BrandedString<"Password">
+export type Username = Brand<string,"Username">
+export type Password = Brand<string,"Password">
 ```
 
-```ts
+```ts {*|8-17|18-22|*}
 // brands.ts
 declare const brand: unique symbol
-declare type BrandedString<T> = string & { [brand]: T }
+declare type Brand<T, B> = T & { [brand]: B }
 
-export type UsernameString = BrandedString<"Username">
-export type PasswordString = BrandedString<"Password">
+export type Username = Brand<string,"Username">
+export type Password = Brand<string,"Password">
+
+// parse.ts
+export function parsePassword(password: string): Password {
+  if (password.length < 8) {
+    throw new Error("Password must be at least 8 characters long")
+  }
+  return password.trim() as Password
+}
+export function isValidUsername(username: string): username is Username {
+  return username.length > 0
+}
+const parsedPassword = parsePassword(password)
+if (isValidUsername(username)) {
+  login(username, parsePassword)
+}
+// do it manually or use a library (zod, io-ts, etc)
 ```
 ````
 
+</div>
+
 ---
-transition: slide-up
-level: 2
+layout: statement
 ---
 
-````md magic-move
-```ts {*|6}
-function processDeposit(
-  amount: number,
-  currency: string,
-  account: string
-): void {
+# Pollution
+
+---
+layout: two-cols
+---
+
+## App (Client)
+
+<img src="/images/phone.png" alt="DR" class="w-1/2" />
+
+::right::
+
+## Article (Or teaser)
+- `URL`
+- Fetched from API
+- Shared by many services
+
+<v-clicks depth="2">
+
+- Relative or absolute?
+    - /nyheder/rød-grød-med-fløde
+    - https://www.dr.dk/nyheder/rød-grød-med-fløde
+    - both of course
+
+</v-clicks>
+
+<v-click>
+
+- legacy reasons
+
+</v-click>
+<v-click>
+
+- C'est la vie
+
+</v-click>
+
+
+---
+class: text-2xl
+layout: two-cols
+---
+
+<!-- <div style="--slidev-code-font-size: 24px; --slidev-code-line-height: 32px;"> -->
+
+
+````md magic-move {lines:true}
+```ts
+// article.ts
+function handleNavigation(url: string) {
   // validate your inputs
-  // your deposit logic
+  if (url === "") {
+    // handle invalid URL
+  }
+  if (isRelativeUrl(url)) {
+    // handle relative URL
+  }
+  if (isAbsoluteUrl(url)) {
+    // handle absolute URL
+  }
+  // our logic
+}
+// breakingArticle.ts
+function addQueryParam(url: string) {
+  // validate your inputs
+  if (url === "") {
+    // handle invalid URL
+  }
+  if (isRelativeUrl(url)) {
+    // handle relative URL
+  }
+  if (isAbsoluteUrl(url)) {
+    // handle absolute URL
+  }
+  // our logic
 }
 ```
 
 ```ts
-function processDeposit(
-  amount: SafeNumber,
-  currency: CurrencyString,
-  account: AccountID
-): void {
-  // your deposit logic
+// article.ts
+function handleNavigation(url: RelativeUrl) {
+  // our logic
+}
+// externalLinkButton.ts
+function addQueryParam(url: AbsoluteUrl) {
+  // our logic
 }
 ```
 ````
 
+<v-click>
+Tests!
+</v-click>
+::right::
+
+````md magic-move {lines:true}
+```ts
+// shareButton.ts
+function createShareableLink(
+  url: string,
+): string {
+  // validate your inputs
+  if (url === "") {
+    // handle invalid URL
+  }
+  if (isRelativeUrl(url)) {
+    // handle relative URL
+  }
+  if (isAbsoluteUrl(url)) {
+    // handle absolute URL
+  }
+}
+```
+```ts
+// shareButton.ts
+function createShareableLink(
+  url: Url,
+): string {
+  // validate your inputs
+  if (isRelativeUrl(url)) {
+    // handle relative URL
+  }
+  if (isAbsoluteUrl(url)) {
+    // handle absolute URL
+  }
+}
+```
+```ts
+// shareButton.ts
+function createShareableLink(
+  url: Url,
+): string {
+  // validate your inputs
+  if (isRelativeUrl(url)) {
+    // handle relative URL
+  }
+  if (isAbsoluteUrl(url)) {
+    // handle absolute URL
+  }
+  if (isFirstBookOfTheStormlightArchiveWayOfKingsByBrandonSander(url)) {
+    // handle special case
+  }
+}
+```
+````
+
+<!-- </div> -->
+
 ---
-transition: fade-out
 layout: two-cols
 layoutClass: gap-16
 ---
 
 # Conclusion
+<v-clicks>
+
 - Type safety
 - No runtime cost
 - Still works as the underlying type
+- Good for the environment!
 - Parse, dont validate! 
-- Dont let loose types poison your codebase
-- Manually but supported in many libraries (like zod)
-- More semantic than just a string, convenient for humans and LLMs
+- Do it manually or a library (zod, io-ts, etc)
+- Clearer semantic than just a string, convenient for humans and LLMs
+
+</v-clicks>
 
 ::right::
 <div class="flex justify-center items-center h-full">
 
 ````md magic-move
-```ts
-declare const brand: unique symbol
-type BrandedString<BrandName> = string & { [brand]: BrandName }
-```
 
 ```ts
 declare const brand: unique symbol
@@ -262,12 +406,24 @@ type Euro = Brand<number, "Euro">
 </div>
 
 ---
-layout: center
-class: text-center
+layout: intro-image
+image: 'images/final.png'
 ---
 
-# Takk for meg
+# Brand your types!
 
-[Documentation](https://sli.dev) · [GitHub](https://github.com/slidevjs/slidev) · [Showcases](https://sli.dev/resources/showcases)
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<img src="/images/dr.png" alt="DR" class="w-1/6 absolute bottom-10 right-10" />
+
+[blog.theodorc.no](https://blog.theodorc.no) · [Slides on GitHub: Theodorrene](https://github.com/theodorrene)
 
 <PoweredBySlidev mt-10 />
