@@ -89,7 +89,7 @@ image: 'images/a_bit_messy.png'
 
 ---
 layout: intro-image
-image: 'images/tight.png'
+image: 'images/total.png'
 class: flex items-center justify-center flex-col
 ---
 
@@ -279,7 +279,7 @@ function handleNavigation(url: string) {
   }
   // our logic
 }
-// breakingArticle.ts
+// externalLinkButton.ts
 function addQueryParam(url: string) {
   // validate your inputs
   if (url === "") {
